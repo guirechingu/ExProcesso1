@@ -14,7 +14,7 @@ public class RedesController {
 		String os = System.getProperty("os.name");
 		String process = null;
 		System.out.println(os);
-		if(os.equals("Windows 10")) {
+		if(os.contains("Windows")) {
 			process = "ipconfig";
 		}else if(os.equals("Linux")) {
 			process = "ifconfig";
