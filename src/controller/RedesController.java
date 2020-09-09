@@ -16,6 +16,8 @@ public class RedesController {
 		System.out.println(os);
 		if(os.equals("Windows 10")) {
 			process = "ipconfig";
+		}else if(os.equals("Linux")) {
+			process = "ifconfig";
 		}
 		
 		try {
@@ -25,13 +27,26 @@ public class RedesController {
 			BufferedReader buffer = new BufferedReader(leitor);
 			String linha = buffer.readLine();
 			String adaptador = null;
-			while (linha != null) {
-				if(linha.contains("Adaptador")) {
-					adaptador = linha;
-				} else if (linha.contains("IPv4.")) {
-					System.out.println(adaptador+" "+linha);
+			if(os.equals("Windows 10")){
+				while (linha != null) {
+					if(linha.contains("Adaptador")) {
+						adaptador = linha;
+					} else if (linha.contains("IPv4.")) {
+						System.out.println(adaptador+" "+linha);
+					}
+					linha = buffer.readLine();
 				}
-				linha = buffer.readLine();
+			}else if(os.equals("Linux")) {
+				while (linha != null) {
+					if(linha.contains("mtu")) {
+						adaptador = linha;
+						adaptador = adaptador.replaceAll(".+>  ", "");
+					} else if (linha.contains("inet ")) {
+						linha = linha.substring(0, linha.indexOf("netmask"));
+						System.out.println(adaptador+" "+linha);
+					}
+					linha = buffer.readLine();
+				}
 			}
 			buffer.close();
 			leitor.close();
