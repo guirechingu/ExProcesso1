@@ -55,4 +55,63 @@ public class RedesController {
 			e.printStackTrace();
 		}
 	}
+	
+	public void ping() {
+		String os = System.getProperty("os.name");
+		String process = null;
+		System.out.println(os);
+		if(os.contains("Windows")) {
+			process = "ping -n 10 www.google.com.br";
+		}else if(os.equals("Linux")) {
+			process = "ping -c 10 www.google.com.br";
+		}
+		
+		try {
+			Process p = Runtime.getRuntime().exec(process);
+			InputStream fluxo = p.getInputStream();
+			InputStreamReader leitor = new InputStreamReader(fluxo);
+			BufferedReader buffer = new BufferedReader(leitor);
+			String linha = buffer.readLine();
+			String ms = null;
+			int contping = 0;
+			int cont = 0;
+			int msn = 0;
+			if(os.equals("Windows 10")){
+				while (linha != null && contping<=12) {
+					contping++;
+					if(linha.contains("ms")) {
+						cont++;
+						ms = linha;
+						ms = ms.replaceAll(".+ tempo=", "");
+						ms = ms.substring(0, ms.indexOf("ms "));
+						System.out.println(ms);
+						msn = msn + Integer.parseInt(ms);
+					}
+					linha = buffer.readLine();
+				}
+				msn = msn/cont;
+				System.out.println("A media do ping para google.com.br é: " +msn);
+			}/*else if(os.equals("Linux")){
+				while (linha != null && contping<=12) {
+					contping++;
+					if(linha.contains("ms")) {
+						cont++;
+						ms = linha;
+						ms = ms.replaceAll(".+ tempo=", "");
+						ms = ms.substring(0, ms.indexOf("ms "));
+						System.out.println(ms);
+						msn = msn + Integer.parseInt(ms);
+					}
+					linha = buffer.readLine();
+				}
+				msn = msn/cont;
+				System.out.println("A media do ping para google.com.br é: " +msn);
+			}*/
+			buffer.close();
+			leitor.close();
+			fluxo.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

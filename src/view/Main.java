@@ -6,7 +6,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		RedesController redeController = new RedesController();
-		redeController.ip();
+		//redeController.ip();
+		redeController.ping();
 	}
 
 }
