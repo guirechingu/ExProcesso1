@@ -75,7 +75,7 @@ public class RedesController {
 			String ms = null;
 			int contping = 0;
 			int cont = 0;
-			int msn = 0;
+			float msn = 0;
 			if(os.equals("Windows 10")){
 				while (linha != null && contping<=12) {
 					contping++;
@@ -85,28 +85,28 @@ public class RedesController {
 						ms = ms.replaceAll(".+ tempo=", "");
 						ms = ms.substring(0, ms.indexOf("ms "));
 						System.out.println(ms);
-						msn = msn + Integer.parseInt(ms);
+						msn = msn + Float.parseFloat(ms);
 					}
 					linha = buffer.readLine();
 				}
 				msn = msn/cont;
-				System.out.println("A media do ping para google.com.br é: " +msn);
-			}/*else if(os.equals("Linux")){
-				while (linha != null && contping<=12) {
+				System.out.println("A media do ping para google.com.br ï¿½: " +msn);
+			}else if(os.equals("Linux")){
+				while (linha != null && contping<=11) {
 					contping++;
-					if(linha.contains("ms")) {
+					if(linha.contains("time")) {
 						cont++;
 						ms = linha;
-						ms = ms.replaceAll(".+ tempo=", "");
-						ms = ms.substring(0, ms.indexOf("ms "));
+						ms = ms.replaceAll(".+ time=", "");
+						ms = ms.substring(0, ms.indexOf(" ms"));
 						System.out.println(ms);
-						msn = msn + Integer.parseInt(ms);
+						msn = msn + Float.parseFloat(ms);
 					}
 					linha = buffer.readLine();
 				}
 				msn = msn/cont;
-				System.out.println("A media do ping para google.com.br é: " +msn);
-			}*/
+				System.out.println("A media do ping para google.com.br ï¿½: " +msn);
+			}
 			buffer.close();
 			leitor.close();
 			fluxo.close();
