@@ -9,21 +9,24 @@ public class Main {
 	public static void main(String[] args) {
 		RedesController redeController = new RedesController();
 		Scanner scan = new Scanner(System.in);
-		int num = 0;
-		while(num!=1 && num!=2){
+		String num = null;
+		do {
 			System.out.println("Ver Adaptadores e IP - digite 1 /// Ver a media de ping para google.com.br - digite 2");
-			num = scan.nextInt();
-			scan.close();
-			if (num == 1){
+			num = scan.nextLine();
+			
+			if (num.equals("1")){
 				redeController.ip();
-			} else if (num == 2){
+			} else if (num.equals("2")){
 				redeController.ping();
 			} else {
-				num = 0;
+				System.out.println("Valor invalido, digite novamente");
+				System.out.println("");
+				num = null;
 			}
 		
 		
-		}
+		}while(!num.equals("1") && !num.equals("2"));
+		scan.close();
 		
 	}
 
